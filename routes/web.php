@@ -5,6 +5,7 @@ use App\Http\Controllers\CatController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PizzaSizeController;
 use App\Http\Controllers\ExtraController;
+use App\Http\Controllers\ProductController;
 
 
 /*
@@ -54,8 +55,6 @@ Route::prefix('pizza-sizes')->name('pizzaSize.')->group(function() {
     Route::post('delete/{pizzaSize}', [PizzaSizeController::class, 'destroy'])->name('destroy');
 });
 
-
-
 Route::prefix('extras')->name('extra.')->group(function() {
     Route::get('', [ExtraController::class, 'index'])->name('index');
     Route::get('create', [ExtraController::class, 'create'])->name('create');
@@ -63,5 +62,14 @@ Route::prefix('extras')->name('extra.')->group(function() {
     Route::get('edit/{extra}', [ExtraController::class, 'edit'])->name('edit');
     Route::post('update/{extra}', [ExtraController::class, 'update'])->name('update')->middleware('phconfig:extra');
     Route::post('delete/{extra}', [ExtraController::class, 'destroy'])->name('destroy')->middleware('phconfig:extra');
+});
+
+Route::prefix('products')->name('product.')->group(function() {
+    Route::get('', [ProductController::class, 'index'])->name('index');
+    Route::get('create', [ProductController::class, 'create'])->name('create');
+    Route::post('store', [ProductController::class, 'store'])->name('store')->middleware('phconfig:product');
+    Route::get('edit/{product}', [ProductController::class, 'edit'])->name('edit');
+    Route::post('update/{product}', [ProductController::class, 'update'])->name('update')->middleware('phconfig:product');
+    Route::post('delete/{product}', [ProductController::class, 'destroy'])->name('destroy')->middleware('phconfig:product');
 });
 

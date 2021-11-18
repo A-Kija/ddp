@@ -4,82 +4,77 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Services\PhotoHandleService;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function index(Request $request)
+    {
+        $products = Product::all();
+        return view('back.product.index', [
+            'products' => $products,
+        ]);
+    }
+
     public function create()
     {
-        //
+        return view('back.product.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request, PhotoHandleService $photoHandler)
     {
-        //
+        $product = new Product;
+        $photoHandler->handlePhoto($request, $product);
+        $product->title = $request->product_title;
+        $product->amount = $request->product_amount;
+        $product->description = $request->product_description;
+        $product->price = $request->product_price;
+        $product->info = $request->product_info;
+        $product->photo = $request->product_photo;
+        $product->save();
+        return redirect()
+        ->route('product.index')
+        ->with('success_message', 'OK. New product was created.');;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
+    public function edit(Request $request, Product $product)
     {
-        //
+        return view('back.product.edit', [
+            'product' => $product,
+         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
+    public function update(Request $request, Product $product, PhotoHandleService $photoHandler)
     {
-        //
+        $photoHandler->handlePhoto($request, $product, 'edit');
+        $product->title = $request->product_title;
+        $product->amount = $request->product_amount;
+        $product->description = $request->product_description;
+        $product->price = $request->product_price;
+        $product->info = $request->product_info;
+        $product->photo = $request->product_photo;
+        $product->save();
+        return redirect()
+        ->route('product.index')
+        ->with('success_message', 'OK. The product was edited.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
+    public function destroy(Product $product, PhotoHandleService $photoHandler)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product)
-    {
-        //
+        // if ($product->getBooks->count()) {
+        //     return redirect()
+        //     ->back()
+        //     ->with('info_message', 'Can not delete the product, because he has books.');
+        // }
+        $photoHandler->deleteOldPhoto($product);
+        $product->delete();
+        return redirect()
+        ->route('product.index')
+        ->with('success_message', 'OK. The product was deleted.');
     }
 }

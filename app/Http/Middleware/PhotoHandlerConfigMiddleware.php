@@ -25,7 +25,7 @@ class PhotoHandlerConfigMiddleware
 
     public function handle(Request $request, Closure $next, $config)
     {
-        
+
         $this->photoHandler->config($config);
 
         return $next($request);
