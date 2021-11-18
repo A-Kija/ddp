@@ -29,7 +29,7 @@ class ExtraController extends Controller
     public function store(Request $request, PhotoHandleService $photoHandler)
     {
         $extra = new Extra;
-        $photoHandler->config('extra');
+        // $photoHandler->config('extra');
         $photoHandler->handlePhoto($request, $extra);
         $extra->title = $request->extra_title;
         $extra->price_s = $request->extra_price_s;
@@ -50,7 +50,7 @@ class ExtraController extends Controller
 
     public function update(Request $request, Extra $extra, PhotoHandleService $photoHandler)
     {
-        $photoHandler->config('extra');
+        // $photoHandler->config('extra');
         $photoHandler->handlePhoto($request, $extra, 'edit');
         $extra->title = $request->extra_title;
         $extra->price_s = $request->extra_price_s;
@@ -69,7 +69,7 @@ class ExtraController extends Controller
         //     ->back()
         //     ->with('info_message', 'Can not delete the extra, because he has books.');
         // }
-        $photoHandler->config('extra');
+        // $photoHandler->config('extra');
         $photoHandler->deleteOldPhoto($extra);
         $extra->delete();
         return redirect()

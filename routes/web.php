@@ -59,9 +59,9 @@ Route::prefix('pizza-sizes')->name('pizzaSize.')->group(function() {
 Route::prefix('extras')->name('extra.')->group(function() {
     Route::get('', [ExtraController::class, 'index'])->name('index');
     Route::get('create', [ExtraController::class, 'create'])->name('create');
-    Route::post('store', [ExtraController::class, 'store'])->name('store');
+    Route::post('store', [ExtraController::class, 'store'])->name('store')->middleware('phconfig:extra');
     Route::get('edit/{extra}', [ExtraController::class, 'edit'])->name('edit');
-    Route::post('update/{extra}', [ExtraController::class, 'update'])->name('update');
-    Route::post('delete/{extra}', [ExtraController::class, 'destroy'])->name('destroy');
+    Route::post('update/{extra}', [ExtraController::class, 'update'])->name('update')->middleware('phconfig:extra');
+    Route::post('delete/{extra}', [ExtraController::class, 'destroy'])->name('destroy')->middleware('phconfig:extra');
 });
 
