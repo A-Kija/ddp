@@ -7,79 +7,49 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $tags = Tag::all();
+        return view('back.tag.index', ['tags' => $tags]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('back.tag.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $tag = new Tag;
+        $tag->title = $request->tag_title;
+        $tag->save();
+        return redirect()->route('tag.index')->with('success_message', 'New tag has arrived.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Tag $tag)
     {
-        //
+        return view('back.tag.edit', ['tag' => $tag]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $tag->title = $request->tag_title;
+        $tag->save();
+        return redirect()->route('tag.index')->with('success_message', 'Der tag was edited.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Tag $tag)
     {
-        //
+        // if ($tag->tagHasOutfits->count()){
+        //     return redirect()->back()->with('info_message', 'There is job to do. Can\'t delete.');
+        // }
+        $tag->delete();
+        return redirect()->route('tag.index')->with('success_message', 'Tag gone.');
     }
 }

@@ -16,7 +16,7 @@ class CreateExtrasTable extends Migration
         Schema::create('extras', function (Blueprint $table) {
             $table->id();
             $table->string('title', 50);
-            $table->string('photo', 255);
+            $table->string('photo', 255)->nullable();
             $table->decimal('price_s', 4, 2)->unsigned();
             $table->decimal('price_m', 4, 2)->unsigned();
             $table->decimal('price_l', 4, 2)->unsigned();

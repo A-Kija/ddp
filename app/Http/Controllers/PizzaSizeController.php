@@ -7,79 +7,51 @@ use Illuminate\Http\Request;
 
 class PizzaSizeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $pizzaSizes = PizzaSize::all();
+        return view('back.pizzaSize.index', ['pizzaSizes' => $pizzaSizes]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('back.pizzaSize.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $pizzaSize = new PizzaSize;
+        $pizzaSize->title = $request->pizzaSize_title;
+        $pizzaSize->size = $request->pizzaSize_size;
+        $pizzaSize->save();
+        return redirect()->route('pizzaSize.index')->with('success_message', 'New pizzaSize has arrived.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PizzaSize  $pizzaSize
-     * @return \Illuminate\Http\Response
-     */
-    public function show(PizzaSize $pizzaSize)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PizzaSize  $pizzaSize
-     * @return \Illuminate\Http\Response
-     */
     public function edit(PizzaSize $pizzaSize)
     {
-        //
+        return view('back.pizzaSize.edit', ['pizzaSize' => $pizzaSize]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PizzaSize  $pizzaSize
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, PizzaSize $pizzaSize)
     {
-        //
+        $pizzaSize->title = $request->pizzaSize_title;
+        $pizzaSize->size = $request->pizzaSize_size;
+        $pizzaSize->save();
+        return redirect()->route('pizzaSize.index')->with('success_message', 'Der pizzaSize was edited.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PizzaSize  $pizzaSize
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(PizzaSize $pizzaSize)
     {
-        //
+        // if ($pizzaSize->pizzaSizeHasOutfits->count()){
+        //     return redirect()->back()->with('info_message', 'There is job to do. Can\'t delete.');
+        // }
+        $pizzaSize->delete();
+        return redirect()->route('pizzaSize.index')->with('success_message', 'PizzaSize gone.');
     }
 }
