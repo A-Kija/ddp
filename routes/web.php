@@ -6,6 +6,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\PizzaSizeController;
 use App\Http\Controllers\ExtraController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\LayoutCatController;
 
 
 /*
@@ -71,5 +72,15 @@ Route::prefix('products')->name('product.')->group(function() {
     Route::get('edit/{product}', [ProductController::class, 'edit'])->name('edit');
     Route::post('update/{product}', [ProductController::class, 'update'])->name('update')->middleware('phconfig:product');
     Route::post('delete/{product}', [ProductController::class, 'destroy'])->name('destroy')->middleware('phconfig:product');
+});
+
+
+Route::prefix('categories-layout')->name('layoutCat.')->group(function() {
+    Route::get('', [LayoutCatController::class, 'index'])->name('index');
+    Route::get('create', [LayoutCatController::class, 'create'])->name('create');
+    Route::post('store', [LayoutCatController::class, 'store'])->name('store');
+    Route::post('up/{layoutCat}', [LayoutCatController::class, 'up'])->name('up');
+    Route::post('down/{layoutCat}', [LayoutCatController::class, 'down'])->name('down');
+    Route::post('delete/{layoutCat}', [CatController::class, 'destroy'])->name('destroy');
 });
 

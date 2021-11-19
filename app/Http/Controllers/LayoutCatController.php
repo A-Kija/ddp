@@ -3,83 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\LayoutCat;
+use App\Models\Cat;
 use Illuminate\Http\Request;
 
 class LayoutCatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $layoutCats = LayoutCat::orderBy('place', 'DESC')->get();
+        return view('back.layoutCat.index', ['layoutCats' => $layoutCats]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $cats = Cat::all();
+        return view('back.layoutCat.create', [
+            'cats' => $cats
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $layoutCat = new LayoutCat;
+        $layoutCat->cat_id = $request->layout_cat_id;
+        $layoutCat->place = 0;
+        $layoutCat->save();// tik nuo cia atsiranda modelyje ID
+        $layoutCat->place = $layoutCat->id;
+        $layoutCat->save();
+        return redirect()->route('layoutCat.index')->with('success_message', 'New layoutCat has arrived.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\LayoutCat  $layoutCat
-     * @return \Illuminate\Http\Response
-     */
-    public function show(LayoutCat $layoutCat)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\LayoutCat  $layoutCat
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(LayoutCat $layoutCat)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LayoutCat  $layoutCat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, LayoutCat $layoutCat)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\LayoutCat  $layoutCat
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(LayoutCat $layoutCat)
     {
-        //
+        // if ($layoutCat->layoutCatHasOutfits->count()){
+        //     return redirect()->back()->with('info_message', 'There is job to do. Can\'t delete.');
+        // }
+        $layoutCat->delete();
+        return redirect()->route('layoutCat.index')->with('success_message', 'LayoutCat gone.');
     }
 }
