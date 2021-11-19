@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('amount', 30);
             $table->string('description', 255);
             $table->decimal('price', 4, 2)->unsigned();
-            $table->tinyText('info');
+            $table->text('info');
             $table->string('photo', 255)->nullable();
             $table->timestamps();
         });

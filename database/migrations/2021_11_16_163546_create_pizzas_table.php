@@ -17,7 +17,7 @@ class CreatePizzasTable extends Migration
             $table->id();
             $table->string('title', 30);
             $table->string('description', 255);
-            $table->tinyText('info');
+            $table->text('info');
             $table->timestamps();
         });
     }
