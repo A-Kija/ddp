@@ -23,13 +23,24 @@ class LayoutCatController extends Controller
     public function create()
     {
         $cats = Cat::all();
+        $usedCats = LayoutCat::all()->pluck('cat_id')->all();
+
         return view('back.layoutCat.create', [
-            'cats' => $cats
+            'cats' => $cats,
+            'usedCats' => $usedCats
         ]);
     }
 
     public function store(Request $request)
     {
+        
+        $usedCats = LayoutCat::all()->pluck('cat_id')->all();
+        if (in_array($request->layout_cat_id, $usedCats)) {
+            $request->flash();
+            return redirect()->back()->with('info_message', 'The cat already added.');
+        }
+       
+        
         $layoutCat = new LayoutCat;
         $layoutCat->cat_id = $request->layout_cat_id;
         $layoutCat->place = 0;
@@ -37,6 +48,41 @@ class LayoutCatController extends Controller
         $layoutCat->place = $layoutCat->id;
         $layoutCat->save();
         return redirect()->route('layoutCat.index')->with('success_message', 'New layoutCat has arrived.');
+    }
+
+
+    public function up(LayoutCat $layoutCat)
+    {
+        $upLayout = LayoutCat::orderBy('place', 'ASC')
+        ->where('place', '>', $layoutCat->place)
+        ->first();
+
+        if (null !== $upLayout) {
+            $place = $layoutCat->place;
+            $layoutCat->place = $upLayout->place;
+            $upLayout->place = $place;
+            $layoutCat->save();
+            $upLayout->save();
+            return redirect()->back()->with('success_message', 'Layout was changed.');
+        }
+        return redirect()->back()->with('info_message', 'This category already is in the Layout top position.');
+    }
+
+    public function down(LayoutCat $layoutCat)
+    {
+        $downLayout = LayoutCat::orderBy('place', 'DESC')
+        ->where('place', '<', $layoutCat->place)
+        ->first();
+
+        if (null !== $downLayout) {
+            $place = $layoutCat->place;
+            $layoutCat->place = $downLayout->place;
+            $downLayout->place = $place;
+            $layoutCat->save();
+            $downLayout->save();
+            return redirect()->back()->with('success_message', 'Layout was changed.');
+        }
+        return redirect()->back()->with('info_message', 'This category already is in the Layout bottom position.');
     }
 
 

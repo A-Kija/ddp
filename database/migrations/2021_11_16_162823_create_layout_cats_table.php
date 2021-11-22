@@ -15,7 +15,7 @@ class CreateLayoutCatsTable extends Migration
     {
         Schema::create('layout_cats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('cat_id');
+            $table->unsignedBigInteger('cat_id')->unique();
             $table->foreign('cat_id')->references('id')->on('cats');
             $table->smallInteger('place');
             $table->timestamps();

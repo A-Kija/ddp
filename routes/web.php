@@ -81,6 +81,6 @@ Route::prefix('categories-layout')->name('layoutCat.')->group(function() {
     Route::post('store', [LayoutCatController::class, 'store'])->name('store');
     Route::post('up/{layoutCat}', [LayoutCatController::class, 'up'])->name('up');
     Route::post('down/{layoutCat}', [LayoutCatController::class, 'down'])->name('down');
-    Route::post('delete/{layoutCat}', [CatController::class, 'destroy'])->name('destroy');
+    Route::post('delete/{layoutCat}', [LayoutCatController::class, 'destroy'])->name('destroy');
 });
 

@@ -21,6 +21,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'bebras@gmail.com',
             'password' => Hash::make('123'),
         ]);
+
+        // CATS
+        $cats = ['Užkandžiai', 'Desertai', 'Kitos prekės', 'Gėrimai'];
+        foreach ($cats as $cat) {
+            DB::table('cats')->insert([
+                'title' => $cat,
+            ]);
+        }
+
+
+
         
     }
 }
