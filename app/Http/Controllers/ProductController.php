@@ -89,6 +89,7 @@ class ProductController extends Controller
         //     ->with('info_message', 'Can not delete the product, because he has books.');
         // }
         $photoHandler->deleteOldPhoto($product);
+        $product->cats()->detach(); // remove cats attachments
         $product->delete();
         return redirect()
         ->route('product.index')
