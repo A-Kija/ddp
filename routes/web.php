@@ -7,6 +7,7 @@ use App\Http\Controllers\PizzaSizeController;
 use App\Http\Controllers\ExtraController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LayoutCatController;
+use App\Http\Controllers\LayoutProductController;
 
 
 /*
@@ -82,5 +83,15 @@ Route::prefix('categories-layout')->name('layoutCat.')->group(function() {
     Route::post('up/{layoutCat}', [LayoutCatController::class, 'up'])->name('up');
     Route::post('down/{layoutCat}', [LayoutCatController::class, 'down'])->name('down');
     Route::post('delete/{layoutCat}', [LayoutCatController::class, 'destroy'])->name('destroy');
+});
+
+
+Route::prefix('products-layout')->name('layoutProduct.')->group(function() {
+    Route::get('', [LayoutProductController::class, 'index'])->name('index');
+    Route::get('create', [LayoutProductController::class, 'create'])->name('create');
+    Route::post('store', [LayoutProductController::class, 'store'])->name('store');
+    Route::post('up/{layoutProduct}', [LayoutProductController::class, 'up'])->name('up');
+    Route::post('down/{layoutProduct}', [LayoutProductController::class, 'down'])->name('down');
+    Route::post('delete/{layoutProduct}', [LayoutProductController::class, 'destroy'])->name('destroy');
 });
 

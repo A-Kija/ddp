@@ -75,7 +75,6 @@ class ProductController extends Controller
         if ($request->cat_id) {
             $product->cats()->attach($request->cat_id);
         }
-
         return redirect()
         ->route('product.index')
         ->with('success_message', 'OK. The product was edited.');
