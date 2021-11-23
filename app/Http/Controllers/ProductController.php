@@ -53,8 +53,11 @@ class ProductController extends Controller
 
     public function edit(Request $request, Product $product)
     {
+        $cats = Cat::all();
         return view('back.product.edit', [
             'product' => $product,
+            'cats' => $cats,
+            'catId' => $product->cats->first()->id ?? 0
          ]);
     }
 
@@ -67,6 +70,12 @@ class ProductController extends Controller
         $product->price = $request->product_price;
         $product->info = $request->product_info;
         $product->save();
+        // Change category
+        $product->cats()->detach();
+        if ($request->cat_id) {
+            $product->cats()->attach($request->cat_id);
+        }
+
         return redirect()
         ->route('product.index')
         ->with('success_message', 'OK. The product was edited.');
