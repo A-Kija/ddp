@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
+    public function cats()
+    {
+        return $this->belongsToMany(Cat::class, 'cats_products', 'product_id', 'cat_id');
+    }
 }

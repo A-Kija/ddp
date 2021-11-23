@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Cat;
 use Illuminate\Http\Request;
 use App\Services\PhotoHandleService;
 
@@ -23,7 +24,10 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('back.product.create');
+        $cats = Cat::all();
+        return view('back.product.create',[
+            'cats' => $cats
+        ]);
     }
 
     public function store(Request $request, PhotoHandleService $photoHandler)
@@ -36,6 +40,12 @@ class ProductController extends Controller
         $product->price = $request->product_price;
         $product->info = $request->product_info;
         $product->save();
+        // Attach category
+        if ($request->cat_id) {
+            $product->cats()->attach($request->cat_id);
+        }
+
+
         return redirect()
         ->route('product.index')
         ->with('success_message', 'OK. New product was created.');;
