@@ -87,7 +87,7 @@ Route::prefix('categories-layout')->name('layoutCat.')->group(function() {
 
 
 Route::prefix('products-layout')->name('layoutProduct.')->group(function() {
-    Route::get('', [LayoutProductController::class, 'index'])->name('index');
+    Route::get('/show-cat/{cat?}', [LayoutProductController::class, 'index'])->name('index');
     Route::get('create', [LayoutProductController::class, 'create'])->name('create');
     Route::post('store', [LayoutProductController::class, 'store'])->name('store');
     Route::post('up/{layoutProduct}', [LayoutProductController::class, 'up'])->name('up');

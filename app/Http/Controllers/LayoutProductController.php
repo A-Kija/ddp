@@ -15,10 +15,19 @@ class LayoutProductController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Cat $cat)
     {
-        $layoutProducts = LayoutProduct::orderBy('place', 'DESC')->get();
-        return view('back.layoutProduct.index', ['layoutProducts' => $layoutProducts]);
+        // dd($cat->id);
+        
+        $layoutProducts = $cat->id ? 
+        LayoutProduct::orderBy('place', 'DESC')->get() :
+        collect();
+        
+        $cats = Cat::all();
+        return view('back.layoutProduct.index', [
+            'layoutProducts' => $layoutProducts,
+            'cats' => $cats
+        ]);
     }
 
     public function create()
