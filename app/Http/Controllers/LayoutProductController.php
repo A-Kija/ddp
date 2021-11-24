@@ -39,7 +39,8 @@ class LayoutProductController extends Controller
             'layoutProducts' => $layoutProducts,
             'cats' => $cats,
             'message' => $message,
-            'header' => $header
+            'header' => $header,
+            'catNow' => $cat
         ]);
     }
 
@@ -74,11 +75,23 @@ class LayoutProductController extends Controller
     }
 
 
-    public function up(LayoutProduct $layoutProduct)
+    public function up(LayoutProduct $layoutProduct, Cat $cat)
     {
-        $upLayout = LayoutProduct::orderBy('place', 'ASC')
+
+        $catId = $cat->id;
+
+        $upLayout = LayoutProduct::whereIn('product_id', function($query) use ($catId){
+            $query->select('product_id')
+            ->from('cats_products')
+            ->where('cats_products.cat_id', $catId);
+        })->orderBy('place', 'ASC')
         ->where('place', '>', $layoutProduct->place)
         ->first();
+        
+        
+        // $upLayout = LayoutProduct::orderBy('place', 'ASC')
+        // ->where('place', '>', $layoutProduct->place)
+        // ->first();
 
         if (null !== $upLayout) {
             $place = $layoutProduct->place;
@@ -91,8 +104,19 @@ class LayoutProductController extends Controller
         return redirect()->back()->with('info_message', 'This productegory already is in the Layout top position.');
     }
 
-    public function down(LayoutProduct $layoutProduct)
+    public function down(LayoutProduct $layoutProduct, Cat $cat)
     {
+        
+        $catId = $cat->id;
+        $downLayout = LayoutProduct::whereIn('product_id', function($query) use ($catId){
+            $query->select('product_id')
+            ->from('cats_products')
+            ->where('cats_products.cat_id', $catId);
+        })->orderBy('place', 'DESC')
+        ->where('place', '<', $layoutProduct->place)
+        ->first();
+        
+        
         $downLayout = LayoutProduct::orderBy('place', 'DESC')
         ->where('place', '<', $layoutProduct->place)
         ->first();

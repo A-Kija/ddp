@@ -90,8 +90,8 @@ Route::prefix('products-layout')->name('layoutProduct.')->group(function() {
     Route::get('/show-cat/{cat?}', [LayoutProductController::class, 'index'])->name('index');
     Route::get('create', [LayoutProductController::class, 'create'])->name('create');
     Route::post('store', [LayoutProductController::class, 'store'])->name('store');
-    Route::post('up/{layoutProduct}', [LayoutProductController::class, 'up'])->name('up');
-    Route::post('down/{layoutProduct}', [LayoutProductController::class, 'down'])->name('down');
+    Route::post('up/{layoutProduct}/{cat}', [LayoutProductController::class, 'up'])->name('up');
+    Route::post('down/{layoutProduct}/{cat}', [LayoutProductController::class, 'down'])->name('down');
     Route::post('delete/{layoutProduct}', [LayoutProductController::class, 'destroy'])->name('destroy');
 });
 
