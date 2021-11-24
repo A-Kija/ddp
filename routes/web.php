@@ -9,6 +9,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LayoutCatController;
 use App\Http\Controllers\LayoutProductController;
 
+use App\Http\Controllers\FrontController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +23,7 @@ use App\Http\Controllers\LayoutProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontController::class, 'index'])->name('front.index');
 
 Auth::routes();
 
