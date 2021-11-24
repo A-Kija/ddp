@@ -17,16 +17,29 @@ class LayoutProductController extends Controller
 
     public function index(Cat $cat)
     {
-        // dd($cat->id);
-        
-        $layoutProducts = $cat->id ? 
-        LayoutProduct::orderBy('place', 'DESC')->get() :
-        collect();
-        
+        if (null === $cat->id) {
+            $message = 'Please select Category to do layout.';
+            $header = 'Category layout selector';
+            $layoutProducts = collect();
+        }
+        else {
+            $message = 'This category has no products.';
+            $header = $cat->title.' Layout.';
+            $catId = $cat->id;
+            $layoutProducts = LayoutProduct::whereIn('product_id', function($query) use ($catId){
+                $query->select('product_id')
+                ->from('cats_products')
+                ->where('cats_products.cat_id', $catId);
+            })->orderBy('place', 'DESC')
+            ->get();
+        }
+       
         $cats = Cat::all();
         return view('back.layoutProduct.index', [
             'layoutProducts' => $layoutProducts,
-            'cats' => $cats
+            'cats' => $cats,
+            'message' => $message,
+            'header' => $header
         ]);
     }
 
