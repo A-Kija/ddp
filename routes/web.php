@@ -10,6 +10,7 @@ use App\Http\Controllers\LayoutCatController;
 use App\Http\Controllers\LayoutProductController;
 
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\CartController;
 
 
 /*
@@ -93,5 +94,12 @@ Route::prefix('products-layout')->name('layoutProduct.')->group(function() {
     Route::post('up/{layoutProduct}/{cat}', [LayoutProductController::class, 'up'])->name('up');
     Route::post('down/{layoutProduct}/{cat}', [LayoutProductController::class, 'down'])->name('down');
     Route::post('delete/{layoutProduct}', [LayoutProductController::class, 'destroy'])->name('destroy');
+});
+
+
+Route::prefix('cart')->name('cart.')->group(function() {
+    
+    Route::post('add/{product}', [CartController::class, 'add'])->name('add');
+
 });
 
