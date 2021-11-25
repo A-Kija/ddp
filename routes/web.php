@@ -100,6 +100,7 @@ Route::prefix('products-layout')->name('layoutProduct.')->group(function() {
 Route::prefix('cart')->name('cart.')->group(function() {
     
     Route::post('add/{product}', [CartController::class, 'add'])->name('add');
+    Route::post('remove/{product}', [CartController::class, 'remove'])->name('remove');
 
 });
 

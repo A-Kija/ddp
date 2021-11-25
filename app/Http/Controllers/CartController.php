@@ -8,13 +8,15 @@ use Session;
 
 class CartController extends Controller
 {
+    
+       
     public function add(Product $product)
     {
         // [id] => [count => 5]
         // [id] => [count => 9]
 
-        $id = (int) $product->id;
         $cart = Session::get('cart', []);
+        $id = (int) $product->id;
         if (isset($cart[$id])) {
             $cart[$id]['count']++;
         }
@@ -22,6 +24,17 @@ class CartController extends Controller
             $cart[$id] = ['count' => 1];
         }
         Session::put('cart', $cart);
+        return redirect()->back();
+    }
+
+    public function remove(Product $product)
+    {
+        $cart = Session::get('cart', []);
+        $id = (int) $product->id;
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            Session::put('cart', $cart);
+        }
         return redirect()->back();
     }
 

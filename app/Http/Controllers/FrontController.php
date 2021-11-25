@@ -8,12 +8,16 @@ use App\Models\LayoutCat;
 use App\Models\LayoutProduct;
 use App\Models\Product;
 use App\Models\Cat;
+use App\Services\ShowCartService;
 
 class FrontController extends Controller
 {
-    public function index()
+    public function index(ShowCartService $showCart)
     {
         $pageData = new stdClass;
+        $pageData->cartCount = $showCart->count();
+        $pageData->cart = $showCart->cart();
+        $pageData->cartTotal = $showCart->total();
         $pageData->layout = [];
 
         $layoutCatsIds = LayoutCat::orderBy('place', 'DESC')
