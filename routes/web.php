@@ -98,9 +98,10 @@ Route::prefix('products-layout')->name('layoutProduct.')->group(function() {
 
 
 Route::prefix('cart')->name('cart.')->group(function() {
-    
+    Route::get('view', [CartController::class, 'view'])->name('view');
     Route::post('add/{product}', [CartController::class, 'add'])->name('add');
     Route::post('remove/{product}', [CartController::class, 'remove'])->name('remove');
+    Route::post('update', [CartController::class, 'update'])->name('update');
 
 });
 

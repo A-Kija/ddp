@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Services\ShowCartService;
 use Session;
+use stdClass;
 
 class CartController extends Controller
 {
@@ -35,6 +37,36 @@ class CartController extends Controller
             unset($cart[$id]);
             Session::put('cart', $cart);
         }
+        return redirect()->back();
+    }
+
+
+    public function view(ShowCartService $showCart)
+    {
+        $pageData = new stdClass;
+        $pageData->hideMiniCart = true;
+        $pageData->cart = $showCart->cart();
+        $pageData->cartTotal = $showCart->total();
+        
+        return view('front.cart.view', ['pageData' => $pageData]);
+    }
+
+    public function update(Request $request)
+    {
+        $cart = Session::get('cart', []);
+        foreach ($cart as $key => &$product) {
+            if (isset($request->product[$key])) {
+                $count = max((int) $request->product[$key], 0);
+                if (!$count) {
+                    unset($cart[$key]);
+                }
+                $product['count'] = $count;
+            }
+            if ($request->delete) {
+                unset($cart[(int)$request->delete]);
+            }
+        }
+        Session::put('cart', $cart);
         return redirect()->back();
     }
 
