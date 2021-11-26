@@ -1,8 +1,6 @@
 /node_modules
-/public
+/public/img
 /public/storage
-/resources/views
-/resources/sass
 /storage/*.key
 /vendor
 .env

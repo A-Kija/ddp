@@ -1,0 +1,24 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;500;700&display=swap');
+// Variables
+@import 'variables';
+@import 'back/list-container';
+@import '~bootstrap/scss/bootstrap';
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.snow.css';
+.card-header {
+    background-color: cornflowerblue;
+}
+
+.navbar-light .navbar-brand {
+    color: cornflowerblue;
+    font-size: 1.5rem;
+    &:hover {
+        color: cornflowerblue;
+        text-decoration: underline;
+    }
+}
+
+.big-top-margin {
+    margin-top: 80px;
+}

@@ -1,0 +1,73 @@
+@import '~bootstrap/scss/bootstrap';
+.card-img-top {
+    // max-height: 200px;
+}
+
+button.cart {
+    svg {
+        width: 30px;
+        height: 30px;
+        fill: rgba(255, 255, 255, 0.5);
+    }
+}
+
+.mini-cart-product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    form {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        h6 {
+            margin: 0;
+        }
+    }
+    img {
+        height: 50px;
+        width: auto;
+    }
+    input {
+        width: 30px;
+        text-align: center;
+    }
+}
+
+form.cart {
+    button.svg {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        svg {
+            height: 24px;
+            width: 24px;
+            fill: crimson;
+        }
+    }
+}
+
+.btn-holder {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    h6 {
+        margin: 0;
+    }
+}
+
+.mini-cart h4 {
+    text-align: right;
+}
+
+.top-logo {
+    height: 50px;
+}
+
+.cart-buttons {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    .btn {
+        margin: 5px;
+    }
+}

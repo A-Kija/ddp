@@ -1,0 +1,126 @@
+.list-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__svg {
+        height: 90px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        margin-right: 20px;
+        svg {
+            height: 40px;
+            width: 40px;
+            fill: $blue;
+            &.rotate {
+                transform: rotate(180deg);
+            }
+        }
+        button {
+            border: none;
+            height: 40px;
+            width: 40px;
+            outline: none;
+            background-color: transparent;
+            border-radius: 50%;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 4px;
+        }
+    }
+    &__content {
+        color: crimson;
+        font-size: 150%;
+    }
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        button {
+            margin: 0 5px;
+        }
+    }
+}
+
+.index-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #dddddd;
+    min-height: 300px;
+    &__buttons {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        flex-direction: column;
+        margin-left: 20px;
+    }
+    &__extra {
+        img {
+            height: 200px;
+            width: auto;
+        }
+    }
+    &__content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+        &__row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        &__col {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+    }
+    .main-title {
+        text-align: left;
+        width: 100%;
+        margin: 0 0 20px 27px;
+        font-size: 150%;
+        color: crimson;
+    }
+    .main-desc {
+        text-align: left;
+        width: 100%;
+        margin: 0 0 10px 27px;
+        font-size: 80%;
+        color: gray;
+    }
+}
+
+.edit-container {
+    &__image {
+        img {
+            height: 200px;
+            width: auto;
+        }
+    }
+}
+
+.layout-add {
+    option:disabled {
+        background-color: rgb(235, 235, 228);
+        color: rgb(84, 84, 84);
+    }
+}
+
+ul#arrow-buttons {
+    li:first-child .list-container__svg form:first-child button {
+        display: none;
+    }
+    li:last-child .list-container__svg form:last-child button {
+        display: none;
+    }
+}
