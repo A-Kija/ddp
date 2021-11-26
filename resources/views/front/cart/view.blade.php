@@ -44,7 +44,7 @@
         <div class="container">
             <div class="cart-buttons">
                 <button type="submit" class="btn btn-success">Update Cart</button>
-                <a href="" class="btn btn-info">Go to Checkout</a>
+                <a href="{{route('checkout.phoneLogin')}}" class="btn btn-info">Go to Checkout</a>
             </div>
         </div>
         @csrf

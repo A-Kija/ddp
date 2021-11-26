@@ -11,6 +11,7 @@ use App\Http\Controllers\LayoutProductController;
 
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 
 
 /*
@@ -102,6 +103,16 @@ Route::prefix('cart')->name('cart.')->group(function() {
     Route::post('add/{product}', [CartController::class, 'add'])->name('add');
     Route::post('remove/{product}', [CartController::class, 'remove'])->name('remove');
     Route::post('update', [CartController::class, 'update'])->name('update');
+
+});
+
+Route::prefix('checkout')->name('checkout.')->group(function() {
+    Route::get('phone-login', [CheckoutController::class, 'phoneLogin'])->name('phoneLogin');
+    Route::post('phone-login', [CheckoutController::class, 'doPhoneLogin'])->name('doPhoneLogin');
+    Route::get('create-client/{client}', [CheckoutController::class, 'createClient'])->name('createClient');
+    Route::post('store-client/{client}', [CheckoutController::class, 'storeClient'])->name('storeClient');
+    Route::get('checkout/{client}', [CheckoutController::class, 'checkout'])->name('checkout');
+    Route::post('order/{client}', [CheckoutController::class, 'order'])->name('order');
 
 });
 
